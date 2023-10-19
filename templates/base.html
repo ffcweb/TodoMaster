@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http_equiv="X-UA-Compatible" content="ie=edge" />
+    <!-- Core theme JS-->
+    <!-- <script src="js/script.js"></script> -->
+    <!-- <script src="{{url_for('static', filename='scripts.js')}}"></script> -->
+
+    <!-- <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script> -->
+
+    <!-- Using jinja syntax here ,"href line:
+        url_for('static':  inside the double brackets is going to give you the result of that as a string,
+        need to import url_for first, and this ('static') is the static folder,
+    the filename put the folderRoute/filename -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/main.css') }}"
+    />
+
+    <!-- Add a block here is going to insert our code on all the other pages that inherit this template.  -->
+    {% block head %} {% endblock %}
+  </head>
+
+  <body>
+    <!-- One more block here is to call this body and then to come over to index here -->
+    <!-- and this for  if else statements for loops, and for things you want printed in. -->
+    {% block body %} {% endblock %}
+  </body>
+</html>

@@ -1,0 +1,159 @@
+{% extends 'base.html' %} {% block head %}
+<title>TODO Master</title>
+<section class="floatleft">
+<div>
+  <h2 id="greeting"></h2>
+  <!-- <h4 id="demoToday"></h4> -->
+  <h2 id="weather"></h2>
+</div>
+<section class="floatright">
+<div>
+  <!-- <h2 id="weather"></h2> -->
+</div>
+</section>
+{% endblock %} {% block body %}
+<header class="header">
+  <h1 style="text-align: center"><strong>TODO Master</strong></h1>
+  <h2 id="countdown"></h2>
+</header>
+
+<h4 id="demoToday"></h4>
+<form action="/" method="POST">
+  <input
+    type="text"
+    class="inputbox"
+    placeholder="Enter your new item"
+    name="content"
+    id="content"
+  />
+  <input type="submit" class="button" value="ADD" />
+</form>
+
+<!-- <div class="content"> -->
+  <!-- if statement, Jinja to syntax : if lisks , jinja filter that called length which is getting the lenght of that list. 
+if the lenght is less than 1,  there is no entry in it. -->
+  {% if lists|length < 1 %}
+  <h2 style="text-align: center">
+    Your list Master is empty. Click the button to create!
+  </h2>
+  <!-- otherwise -->
+  {% else %}
+  <table id="tables">
+    <tr>
+      <th>TITLE</th>
+      <th>DATE</th>
+      <th>EDIT</th>
+    </tr>
+    <!--  do jinjia to syntax here -->
+    {% for list in lists %}
+
+    <tr>
+      <!-- this is going to return the content of each list. -->
+      <td>{{ list.content }}</td>
+      <!-- this is for the date created. going to return the content of each list. -->
+      <td>{{ list.date_created.date() }}</td>
+      <td>
+        <div class="whitebutton">
+          <!-- to delete list using id-->
+          <a href="/delete/{{list.id}}">DELETE</a>
+        </div>
+        <br />
+        <br />
+        <div class="whitebutton">
+          <!-- to update list using id-->
+          <a href="/update/{{list.id}}">UPDATE</a>
+        </div>
+      </td>
+    </tr>
+    <!-- this is going to grab all of the lists in "lists" variable. -->
+    {% endfor %}
+    <br>
+<br>
+<br>
+  </table>
+
+<footer>
+    <div class="container-fluid">
+    <div class="footer" class="p-0 bg-dark">
+        <!-- <div class="container-fluid p-0"> -->
+        <p class="m-0 text-center text-white"> Copyright &copy; fangfang.ca 2023</p>
+    </div>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</footer>
+
+
+      <!-- Bootstrap core JS-->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+      <!-- Core theme JS-->
+    <!-- <script src="js/scripts.js"></script> -->
+
+<script>
+    //  greeting
+const time = new Date().getHours();
+let greeting;
+if (time < 1) {
+    greeting = "Good morning! 🌞 ";
+} else if (time < 18) {
+    greeting = "Good day! 🏖️ ";
+} else {
+    greeting = "Good night! 🌛 ";
+}
+document.getElementById("greeting").innerHTML = greeting;
+</script>
+
+<script>
+const d = new Date();
+document.getElementById("demoToday").innerHTML = "Today is " + d.toDateString();
+</script>
+
+<script>
+  const url = "https://api.openweathermap.org/data/2.5/weather?lat=45.50&lon=-73.5698065&appid=32846c47b50325e2605afa8b775f31f6";
+  fetch(url).then(function(response) {
+  return response.json();
+}).then(function(data) {
+
+  const temp = Math.round(data.main.temp - 273.15)
+  document.getElementById("weather").innerHTML = temp + "  °C 🌡️";
+  console.log(data);
+}).catch(function(err) {
+  console.log('Fetch Error :-S', err);
+});
+  </script>
+  
+
+<script>
+// Set the date we're counting down to
+var countDownDate = new Date("Dec 31, 2023 00:00:00").getTime();
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+  // Get today's date and time
+  var now = new Date().getTime();
+    
+  // Find the distance between now and the count down date
+  var distance = countDownDate - now;
+    
+  // Time calculations for days, hours, minutes and seconds
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+  // Output the result in an element with id="demo"
+  document.getElementById("countdown").innerHTML =" There is "+ days + "d " + hours + "h "
+  + minutes + "m " + seconds + "s " + "left this year";
+    
+  // If the count down is over, write some text 
+  if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("countdown").innerHTML = "EXPIRED";
+  }
+}, 1000);
+</script>
+<!--  terminate the if statement -->
+  {% endif %}
+</div>
+{% endblock %}

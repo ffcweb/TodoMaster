@@ -1,0 +1,15 @@
+{% extends 'base.html' %} {% block head %}
+<title>TO DO Master</title>
+{% endblock %} {% block body %}
+<div class="content">
+  <h1 style ="text-align: center"></h1> UPDATE LIST </h1>
+
+<div class="form">
+    <!-- grab date to update list and hask id -->
+  <form action="/update/{{list.id}}" method="POST">
+    <!--value to grab list content -->
+    <input type="text" name="content" id="content" value="{{list.content}}"/>
+    <input type="submit" value="Update list" />
+  </form>
+</div>
+{% endblock %}
